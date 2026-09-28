@@ -1,6 +1,6 @@
 # Shohoj Niyog — Frontend (Next.js + TypeScript + Tailwind CSS)
 
-## 1. Quick story — *why this exists*
+## 1. Quick story — _why this exists_
 
 Imagine you're a recruiter at a growing company. You run dozens of interviews weekly and want a consistent, fast, and objective way to shortlist candidates. **Manually taking interviews,** managing techinical and human resource interviewer, asking questions, and scoring **takes too long** and produces inconsistent results.
 
@@ -10,33 +10,38 @@ This app solves that pain: interviewers **create sessions** (they give AI a shor
 
 ## 2. Goals for this repository
 
-* **Tech stack:** Next.js (App Router), TypeScript, Tailwind CSS
-* **Theming:** Global CSS variables + Tailwind;
-* **Forms & validation:** react-hook-form + Zod
-* **Data:** Static fixtures that mirror backend payloads (easy API swap later)
-* **Component design:** Tiny, reusable components (Button, Input, Card, Loading, Empty, Error, etc.)
-* **Accessibility & responsiveness** from the start
+- **Tech stack:** Next.js (App Router), TypeScript, Tailwind CSS
+- **Theming:** Global CSS variables + Tailwind;
+- **Forms & validation:** react-hook-form + Zod
+- **Data:** Static fixtures that mirror backend payloads (easy API swap later)
+- **Component design:** Tiny, reusable components (Button, Input, Card, Loading, Empty, Error, etc.)
+- **Accessibility & responsiveness** from the start
 
 ---
 
 ## 3. How to open this project on your machine
 
 ### Prerequisites
-* **Node.js v18+**
-* **npm / yarn / pnpm**
+
+- **Node.js v18+**
+- **npm / yarn / pnpm**
 
 ### Steps
 
-
 #### 1. Clone the repository
+
 ```
-git clone https://github.com/nafistarik/shohoj-niyog-frontend.git
+git clone git remote add origin git@github.com:Ahnaf0171   Smart-Recruitment-System-Frontend-.git
 ```
+
 #### 2. Go into the project folder
+
 ```
 cd shohoj-niyog-frontend
 ```
+
 #### 3. Install dependencies
+
 ```
 npm install
 or
@@ -44,7 +49,9 @@ yarn install
 or
 pnpm install
 ```
+
 #### 4. Start the development server
+
 ```
 npm run dev
 or
@@ -52,7 +59,9 @@ yarn dev
 or
 pnpm dev
 ```
+
 Now open your browser and visit:
+
 ```
 http://localhost:3000
 ```
@@ -61,38 +70,38 @@ http://localhost:3000
 
 ### Public
 
-* `/` — Landing page (hero, login as Candidate / Interviewer, About, FAQ, Contact, footer)
-* `/signup` — Unified signup page: choose role (candidate/interviewer)
-* `/login` — Login page
+- `/` — Landing page (hero, login as Candidate / Interviewer, About, FAQ, Contact, footer)
+- `/signup` — Unified signup page: choose role (candidate/interviewer)
+- `/login` — Login page
 
 ### Interviewer (authenticated & role-guarded)
 
-* `/interviewer/dashboard` — Interviewer dashboard (sidebar + topbar)
-* `/interviewer/sessions/create` — Create interview session (form + scheduled time)
-* `/interviewer/sessions/[id]` — Session details (QA pairs, allowed candidates, scheduled, status)
-* `/interviewer/sessions/[id]/results` — All candidate responses & scores for the session
+- `/interviewer/dashboard` — Interviewer dashboard (sidebar + topbar)
+- `/interviewer/sessions/create` — Create interview session (form + scheduled time)
+- `/interviewer/sessions/[id]` — Session details (QA pairs, allowed candidates, scheduled, status)
+- `/interviewer/sessions/[id]/results` — All candidate responses & scores for the session
 
 ### Candidate (authenticated & role-guarded)
 
-* `/candidate/dashboard` — Candidate dashboard
-* `/candidate/interview/[id]` — Participate page: see questions and record video answers (one-by-one or sequential UX)
-* `/candidate/results` — Candidate's interview results and decisions
+- `/candidate/dashboard` — Candidate dashboard
+- `/candidate/interview/[id]` — Participate page: see questions and record video answers (one-by-one or sequential UX)
+- `/candidate/results` — Candidate's interview results and decisions
 
 ---
 
 ## 5. Theme & Design
 
-* Global CSS variables (in `styles/globals.css`) provide tokens.
-* Primary color palette: `0891b2` (blue), sky-blue tints and very light-white background shades.
-* Tailwind config extends colors using tokens mapped to CSS variables; use utility classes + small component-level classes.
+- Global CSS variables (in `styles/globals.css`) provide tokens.
+- Primary color palette: `0891b2` (blue), sky-blue tints and very light-white background shades.
+- Tailwind config extends colors using tokens mapped to CSS variables; use utility classes + small component-level classes.
 
 ---
 
 ## 6. Validation & Forms
 
-* Used `react-hook-form` with `zodResolver`.
-* Kept Zod schemas in `lib/schemas/*` and export both `TypeOf<typeof schema>` as TS types.
-* Validated on submit, show field-level errors inline with `Toast` or `Input` helper text.
+- Used `react-hook-form` with `zodResolver`.
+- Kept Zod schemas in `lib/schemas/*` and export both `TypeOf<typeof schema>` as TS types.
+- Validated on submit, show field-level errors inline with `Toast` or `Input` helper text.
 
 Example (SessionCreate) fields: `position`, `stacks`, `level`, `allowed_candidates`, `num_questions`, `scheduled`.
 
@@ -100,9 +109,9 @@ Example (SessionCreate) fields: `position`, `stacks`, `level`, `allowed_candidat
 
 ## 7. Video recording & submission UX (candidate)
 
-* Recorded per-question short video clips (120s). Stored each as `File` in `FormData` and POST to `/api/response/`.
-* Used MediaRecorder API with fallback message for unsupported browsers.
-* Presented questions one-at-a-time: reduces candidate anxiety and simplifies recording.
+- Recorded per-question short video clips (120s). Stored each as `File` in `FormData` and POST to `/api/response/`.
+- Used MediaRecorder API with fallback message for unsupported browsers.
+- Presented questions one-at-a-time: reduces candidate anxiety and simplifies recording.
 
 ---
 
@@ -142,7 +151,7 @@ Example (SessionCreate) fields: `position`, `stacks`, `level`, `allowed_candidat
 
 ## 9. Deployment
 
-* Used Vercel for seamless Next.js deployment.
+- Used Vercel for seamless Next.js deployment.
 
 ---
 
