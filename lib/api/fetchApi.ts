@@ -5,6 +5,7 @@ export interface ApiResponseBase {
   error: boolean;
   status: number;
   message: string;
+  errorData?: any;
 }
 
 export interface ApiResponse<T> extends ApiResponseBase {
@@ -13,13 +14,13 @@ export interface ApiResponse<T> extends ApiResponseBase {
 export const fetchApi = async <T>(
   endpoint: string,
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
-  body?: unknown
+  body?: unknown,
 ): Promise<ApiResponse<T>> => {
   try {
     const { response, parsed } = await createBaseRequest(
       endpoint,
       method,
-      body
+      body,
     );
 
     if (!response.ok) {
@@ -27,7 +28,11 @@ export const fetchApi = async <T>(
         success: false,
         error: true,
         status: response.status,
-        message: (parsed as any)?.error || "Request failed",
+        message:
+          (parsed as any)?.error ||
+          (parsed as any)?.message ||
+          "Request failed",
+        errorData: parsed,
         data: null,
       };
     }

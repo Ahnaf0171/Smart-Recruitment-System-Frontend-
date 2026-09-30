@@ -8,12 +8,13 @@ import { PageHeader } from "@/components/shared/page-header";
 import { API_BASE_URL } from "@/lib/constants";
 import { getCookie } from "@/lib/utils";
 import { useFetch } from "@/hooks/use-fetch";
+import InterviewNotStartedModal from "@/components/shared/interview-not-started-modal";
 
 type Question = {
   question: string;
 };
 
-const MAX_TIME = 120;
+const MAX_TIME = 240;
 
 const VideoInterview: React.FC = () => {
   const [error, setError] = useState("");
@@ -35,9 +36,10 @@ const VideoInterview: React.FC = () => {
   const sessionId = pathParts[3];
 
   const {
-    data: questions = [],
+    data: questions,
     loading: loadingQuestions,
     error: fetchError,
+    errorData,
   } = useFetch<Question[]>(sessionId ? `/api/find/${sessionId}` : null);
 
   const submitRecordings = useCallback(
@@ -51,7 +53,7 @@ const VideoInterview: React.FC = () => {
       console.log(
         "submitRecordings called with recordings:",
         Object.keys(finalRecordings).length,
-        "videos"
+        "videos",
       );
 
       try {
@@ -73,7 +75,7 @@ const VideoInterview: React.FC = () => {
               Authorization: token ? `Bearer ${token}` : "",
               "Content-Type": "multipart/form-data",
             },
-          }
+          },
         );
 
         console.log("✅ Recordings uploaded successfully!", response.data);
@@ -87,7 +89,7 @@ const VideoInterview: React.FC = () => {
         setIsSubmitting(false);
       }
     },
-    [isSubmitting, sessionId, router]
+    [isSubmitting, sessionId, router],
   );
 
   const stopRecordingAsync = useCallback((): Promise<Blob | null> => {
@@ -211,7 +213,7 @@ const VideoInterview: React.FC = () => {
         allRecordings[currentQIndex] = finalBlob;
         console.log(
           "Added final recording. Total recordings:",
-          Object.keys(allRecordings).length
+          Object.keys(allRecordings).length,
         );
       }
 
@@ -272,9 +274,24 @@ const VideoInterview: React.FC = () => {
   const progress = ((MAX_TIME - timeLeft) / MAX_TIME) * 100;
 
   if (loadingQuestions) return <p>Loading session...</p>;
-  if (fetchError) return <p style={{ color: "red" }}>{error}</p>;
-  if (questions?.length === 0) return <p>No questions available</p>;
 
+  if (errorData?.code === "INTERVIEW_NOT_STARTED") {
+    return (
+      <InterviewNotStartedModal
+        open
+        scheduledTime={errorData.scheduled_time}
+        startsIn={errorData.starts_in}
+      />
+    );
+  }
+
+  if (fetchError) {
+    return <p style={{ color: "red" }}>{fetchError}</p>;
+  }
+
+  if (!questions || questions.length === 0) {
+    return <p>No questions available</p>;
+  }
   return (
     <div className="min-h-screen">
       <PageHeader
@@ -357,7 +374,8 @@ const VideoInterview: React.FC = () => {
                 >
                   {isSubmitting ? (
                     "Submitting..."
-                  ) : questions?.length && currentQIndex === questions?.length - 1 ? (
+                  ) : questions?.length &&
+                    currentQIndex === questions?.length - 1 ? (
                     <>
                       <Send className="w-5 h-5 mr-2" />
                       Submit All Responses
@@ -433,8 +451,8 @@ const VideoInterview: React.FC = () => {
                       index === currentQIndex
                         ? "bg-primary"
                         : recordings[index]
-                        ? "bg-green-500"
-                        : "bg-muted-foreground/30"
+                          ? "bg-green-500"
+                          : "bg-muted-foreground/30"
                     }`}
                     aria-label={`Go to question ${index + 1}`}
                   />
