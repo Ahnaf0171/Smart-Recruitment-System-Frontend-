@@ -70,7 +70,9 @@ export default function CandidateResultCard({
     if (score >= 6) return "text-yellow-600 dark:text-yellow-400";
     return "text-red-600 dark:text-red-400";
   };
-
+  const totalScore =
+    typeof result.total_score === "number" ? result.total_score : null;
+  const responses = result.responses ?? [];
   const enabled = isSelectEnabled("interviewer", result.decision);
   const allowedOptions = getAllowedOptions("interviewer", result.decision);
   const visibleOptions = enabled
@@ -103,11 +105,9 @@ export default function CandidateResultCard({
             <div className="flex items-center justify-start sm:justify-end gap-4">
               <div className="flex items-baseline">
                 <div
-                  className={`text-2xl font-bold ${getScoreColor(
-                    result.total_score
-                  )}`}
+                  className={`text-2xl font-bold ${totalScore !== null ? getScoreColor(totalScore) : "text-muted-foreground"}`}
                 >
-                  {result.total_score.toFixed(1)}
+                  {totalScore !== null ? totalScore.toFixed(1) : "—"}
                 </div>
                 <div className="text-sm text-slate-500 dark:text-slate-400 ml-1">
                   / 10
@@ -175,7 +175,7 @@ export default function CandidateResultCard({
           </h4>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {result.responses.map((response: any, index: number) => (
+            {responses.map((response: any, index: number) => (
               <div
                 key={response.question_id}
                 className="bg-white dark:bg-slate-900 rounded-lg p-4 border border-slate-200 dark:border-slate-700 "
@@ -188,10 +188,10 @@ export default function CandidateResultCard({
                     <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mr-1" />
                     <span
                       className={`font-semibold ${getScoreColor(
-                        response.score
+                        response.score,
                       )}`}
                     >
-                      {response.score.toFixed(1)}
+                      {typeof response.score === "number" ? response.score.toFixed(1) : "—"}
                     </span>
                   </div>
                 </div>

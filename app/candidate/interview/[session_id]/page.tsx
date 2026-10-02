@@ -166,6 +166,7 @@ const VideoInterview: React.FC = () => {
     chunksRef.current = [];
     const mediaRecorder = new MediaRecorder(streamRef.current);
     mediaRecorderRef.current = mediaRecorder;
+    console.log("MediaRecorder MIME:", mediaRecorder.mimeType);
     setIsRecording(true);
 
     mediaRecorder.ondataavailable = (e) => {

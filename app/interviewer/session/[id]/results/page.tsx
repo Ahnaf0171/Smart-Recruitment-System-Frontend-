@@ -45,7 +45,9 @@ export default function SessionResultsPage() {
   const handleDecisionChange = (candidateId: string, decision: string) => {
     // optimistic UI
     setResultsData((prev) =>
-      prev.map((r) => (r.candidate_id === candidateId ? { ...r, decision } : r))
+      prev.map((r) =>
+        r.candidate_id === candidateId ? { ...r, decision } : r,
+      ),
     );
     updateDecisions(
       {
@@ -58,10 +60,13 @@ export default function SessionResultsPage() {
         onError: () => {
           refetchResults(); // rollback if failed
         },
-      }
+      },
     );
   };
-  const highestScore = Math.max(...resultsData.map((r) => r.total_score));
+  const scores = resultsData
+    .map((r) => r.total_score)
+    .filter((s): s is number => typeof s === "number");
+  const highestScore = scores.length ? Math.max(...scores) : -1;
 
   if (resultsError) return <ErrorState message={resultsError} />;
   if (resultsLoading) return <LoadingState data="Interview Results" />;
