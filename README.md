@@ -1,4 +1,4 @@
-# Shohoj Niyog — Frontend (Next.js + TypeScript + Tailwind CSS)
+# Smart Recruitment System — Frontend (Next.js + TypeScript + Tailwind CSS)
 
 ## 1. Quick story — _why this exists_
 

@@ -17,10 +17,10 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Shohoj Niyog",
+  title: "Smart Recruitment System",
   description:
     "Streamline your hiring process with our comprehensive video interview platform",
-  generator: "Md. Nafis Tarik",
+  generator: "Abdullah Ahnaf",
 };
 
 export default function RootLayout({

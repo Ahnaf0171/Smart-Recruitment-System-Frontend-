@@ -94,7 +94,7 @@ function Footer() {
           </div>
         </div>
         <div className="border-t border-sidebar-border mt-8 pt-6 text-center text-muted-foreground font-body animate-fade-in">
-          <p>&copy;2025 Shohoj Niyog. All rights reserved.</p>
+          <p>&copy;2025 Smart Recruitment System. All rights reserved.</p>
         </div>
       </div>
     </footer>
